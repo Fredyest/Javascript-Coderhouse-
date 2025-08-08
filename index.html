@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramirez Alfredo Entrega 1</title>
+</head>
+<body>
+    
+    <h1>Entrega 1 Simulador</h1>
+    <h4>Control de procesos para un estudio de animacion</h4>
+    <br>
+    <p>Descripcion: El proyecto tiene la finalidad de emular una pagina de control de procesos, tomese como referencia monday o trello.</p>
+    <p>
+        Este en especifico da seguimiento al trabajo de un animador en un estudio de animacion, que tiene como responsabilidad hacer distintas tomas<br>
+        (shots) que tienen una duracion, dificultad y procesos especificos, el animador tiene que alcanzar una cuota de segundos producidos<br>
+        semanalmente y se le paga por cada segundo producido, si alcanza la meta minima de segundos producidos obtiene un bono adicional sobre<br>
+        su pago total.
+    </p>
+    
+    <button onclick="start()" id="start">Iniciar</button><br><br>
+
+    <form id="shotsRegistration">
+        <label>
+            Frames del shot <span id="shotCount">1</span><br>
+            <input type="text" id="frames">
+        </label>
+        <button type="button" onclick="addShot()">Añadir Shot</button> <br>
+        <button type="button" onclick="checPay()">Pagar semana</button>
+
+    </form>
+   
+    
+    
+     <script src="scripts/main.js"></script>
+</body>
+</html>
