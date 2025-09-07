@@ -1,0 +1,16 @@
+body{
+    background-color: rgb(46, 42, 46);
+}
+
+.paiedColor{
+    border-color: blueviolet;
+    color: blueviolet;
+}
+
+.paiedColor:hover:focus{
+    background-color: blueviolet;
+    color: rgb(255, 255, 255);
+    border-color: blueviolet;
+}
+
+
