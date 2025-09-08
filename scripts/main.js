@@ -2,7 +2,8 @@
 const weeklyFee = 15.0
 //Descripcion del objeto shot (mas adelante sera mas complejo)
 class Shot{
-    constructor(duration, dueDate, status){
+    constructor(name,duration, status, dueDate){
+        this.name = name
         this.duration = duration
         this.status = status
         this.dueDate = dueDate
@@ -41,42 +42,96 @@ const shotStatus = {
     waitingReview : 'Waiting Review',
     aproved : 'Aproved',
     onHold : 'On Hold',
-    internalCorrections : 'Internal Corrections',
+    internalCorrections : 'Corrections',
 }
 
 //Funciones del DOM
 //Inicia el programa pidiendo el nombre y mostrando el form
 
+const container = document.getElementById("shotTable");
+
 function start(){
     //Agarrar datos de local.Storage 
 }
 
-//Limpia los inputs segun el modal actual
-let modalInputs = [];
-document.addEventListener("click", function(e) {
-  if (e.target.classList.contains("btn")) {
-    // find the closest modal from the clicked button
-    const modal = e.target.closest(".modal");
-    if (!modal) return;
-    modalInputs = modal.querySelectorAll("input, textarea");
-  }
+
+
+        
+//crear el select de las cards
+function createSeclect(status){
+    let selectBox = document.createElement("select");
+    selectBox.classList.add("form-select");
+    for (const key in shotStatus) {
+        
+        let optionElement = document.createElement("option");
+        optionElement.textContent = shotStatus[key];
+        
+        if(optionElement.textContent == status){
+            optionElement.setAttribute("selected", "selected");
+            console.log(optionElement,optionElement.textContent,status)
+        }
+
+        selectBox.appendChild(optionElement);
+    }
+    return selectBox.outerHTML
+}
+
+function createCard(shot){
+    let shotCard = `<div class="col">
+    <div class="card w-75 h-85 text-bg-light mx-auto">
+        <div class="card-header fw-semibold">Blocking</div>
+        <div class="card-body">
+            <h5 class="card-title">${shot.name}</h5>
+            <p class="card-text font-monospace">Frames: ${shot.duration}</p>
+            ${createSeclect(shot.status)}
+        </div>
+        <div class="card-footer bg-transparent text-end fst-italic fw-lighter">Due date: ${shot.dueDate}</div>
+    </div>
+    </div>`;
+    return shotCard
+}
+
+function dateFormat(day,month){
+    const months = [
+  "January", 
+  "February", 
+  "March", 
+  "April", 
+  "May", 
+  "June", 
+  "July", 
+  "August", 
+  "September", 
+  "October", 
+  "November", 
+  "December"
+];
+    return `${months[month]} - ${day}`
+}
+
+let form_AddShot = document.getElementById("new-shot")
+//añade un nuevo objeto shot al array de animador.assignments tomando el dato del form del modal Add Shot
+form_AddShot.addEventListener("submit", function(e){
+    e.preventDefault();
+    const formData = new FormData(form_AddShot)
+
+    let newShotAdded = new Shot(formData.get("shot-name"),parseInt(formData.get("frames")),shotStatus.new,dateFormat(formData.get("day"),formData.get("month")))
+    animador.assignments.push(newShotAdded)
+    container.insertAdjacentHTML("beforeend", createCard(newShotAdded));
+
+    form_AddShot.reset();
 });
 
-function clearInputs(inputs){
-    inputs.forEach(el => {
-        el.value = ""; // reset input/textarea
+//añade listeners a los botones de cierre para limpiar su form
+const buttons_Clear = document.querySelectorAll(".btn-clear");
+buttons_Clear.forEach((btn) => {
+    btn.addEventListener("click", function () {
+        const formId = btn.dataset.form; // "shotForm"
+        const form = document.getElementById(formId);
+        if (form) form.reset();
     });
-}
+});
 
-//añade un nuevo objeto shot al array de animador.assignments tomando el dato del textbox
-function addShot(){
-    let frames = parseInt(document.getElementById("frames-count").value)
-    let today = new Date();
-    animador.assignments.push(new Shot(frames,shotStatus.new,`"${today.getDay+3}-${today.getMonth.toString}-${today.getFullYear}"`))
-    
-    console.log("Total de segundos acumulados: " + totalSeconds())
-    clearInputs(modalInputs)
-}
 
 //Funcion que hace el calculo neto del pago semanal y reinicia el animador.assignments
 function payWeek(){

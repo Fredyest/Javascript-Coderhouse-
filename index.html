@@ -20,20 +20,20 @@
 </nav>
 
 <div class="container mt-4">
-<div class="row row-cols-2 row-cols-md-4 g-4">
+<div class="row row-cols-2 row-cols-md-4 g-4" id="shotTable">
   <div class="col">
-    <div class="card w-75 h-85 text-bg-light mx-auto">
+    <div class="card w-75 h-85 mx-auto">
       <div class="card-header fw-semibold">Blocking</div>
       <div class="card-body">
         <h5 class="card-title">S01-SC12-SH02</h5>
         <p class="card-text font-monospace">Frames: 123</p>
-        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-          <option selected>New</option>
-          <option selected>In Progress</option>
-          <option selected>Waiting Review</option>
-          <option selected>Aproved</option>
-          <option selected>On Hold</option>
-          <option selected>Corrections</option>
+        <select class="form-select">
+          <option>New</option>
+          <option>In Progress</option>
+          <option>Waiting Review</option>
+          <option>Aproved</option>
+          <option>On Hold</option>
+          <option>Corrections</option>
         </select>
       </div>
       <div class="card-footer bg-transparent text-end fst-italic fw-lighter">Footer</div>
@@ -58,15 +58,15 @@
         <h5 class="modal-title">Add a new shot</h5>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="new-shot">
           <div class="row">
             <div class="mb-1 col-md-6">
               <label for="recipient-name" class="col-form-label">Shot Name:</label>
-              <input type="text" class="form-control" id="shot-name" placeholder="S00-SC00-SH00">
+              <input name="shot-name" type="text" class="form-control" id="shot-name" placeholder="S00-SC00-SH00">
             </div>
             <div class="mb-1 col-md-4">
               <label for="message-text" class="col-form-label">Frames:</label>
-              <input type="text" class="form-control" id="frames-count" placeholder="Total number of frames">
+              <input name="frames" type="text" class="form-control" id="frames-count" placeholder="Total number of frames">
             </div>
           </div>
           <div class="row ">
@@ -74,17 +74,17 @@
           </div>
           <div class="row ">
             <div class="col-md-3">
-              <input type="text" class="form-control" id="shot-name" placeholder="DD">
+              <input name="day" type="text" class="form-control" placeholder="DD">
             </div>
             <div class="col-md-3">
-              <input type="text" class="form-control" id="shot-name" placeholder="MM">
+              <input name="month" type="text" class="form-control" placeholder="MM">
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary">Save</button>
+        <button class="btn btn-secondary btn-clear" data-form="new-shot" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary" form="new-shot">Add Shot</button>
       </div>
     </div>
   </div>
